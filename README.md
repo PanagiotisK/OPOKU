@@ -11,16 +11,16 @@ The site is buildless HTML, CSS, and JavaScript. It needs a small local HTTP ser
 From the project root, run either command:
 
 ```bash
-python -m http.server 8000 --directory dist
+python -m http.server 8000 --bind 127.0.0.1 --directory dist
 ```
 
 On Windows, if `python` is not on PATH:
 
 ```powershell
-py -m http.server 8000 --directory dist
+py -m http.server 8000 --bind 127.0.0.1 --directory dist
 ```
 
-Then open <http://localhost:8000>. An internet connection is required. There is no npm install or build step.
+Then open <http://127.0.0.1:8000>. An internet connection is required. There is no npm install or build step.
 
 ## Choose and configure a city
 
@@ -65,6 +65,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 - The panels and map controls are hidden at startup. Use the header toggle to show them.
 - Choose Athens, Thessaloniki, Berlin, London, or Barcelona from the City selector.
 - The Mood selector follows the selected city's local sunrise and sunset by default: Blue hour runs within one hour before and after each, Golden hour covers the remaining daylight, and After dark covers the rest of the night. Turn off **Use city local time** to choose a mood manually; the mood URL parameter makes that look shareable.
+- Connect Spotify in the playback panel to show the track or episode playing on the same Spotify account. With the extra playback permission, Opoku can register as a Spotify Connect device; choose Opoku from Spotify on your phone or click **Play here** to transfer playback into this browser.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
 - The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
@@ -72,18 +73,34 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 - **Hide panels** clears the interface panels from the map. The toggle remains available at the upper right.
 - When a journey ends, its line, aura, and endpoint markers are removed. If the camera was following it, the camera smoothly follows the newest active journey.
 
+## Spotify playback
+
+The playback panel displays the current track or podcast and can register this browser as **Opoku** in Spotify Connect. With a compatible Spotify Premium account, start a track on your phone and either select Opoku in Spotify's device picker or click **Play here** in Opoku to transfer audio to the browser.
+
+Playback uses Spotify's Web Playback SDK and the Authorization Code with PKCE flow. Opoku requests `user-read-currently-playing`, `streaming`, and `user-modify-playback-state` to display metadata, register the browser player, and transfer playback. The SDK also requires `user-read-email` and `user-read-private` for token validation; Opoku does not request or display profile or email data. Access and refresh tokens are kept in the current browser tab's `sessionStorage`; no client secret or server is used. Disconnecting clears the tokens and disconnects the browser player. The public Spotify Client ID is in `dist/spotify.js`.
+
+To enable it:
+
+1. In the Spotify Developer Dashboard, open the app for this Client ID, enable the Web Playback SDK, and add each intended Spotify account to the app's allowed users.
+2. Register the exact redirect URI for each environment in the app settings. On the deployed site it is the current HTTPS page's origin and path (for example, `https://your-site.example/`). For local development, register `http://127.0.0.1:8000/`. Spotify requires an exact match; `localhost` and `file://` redirects are not supported.
+3. Open Opoku at that registered URL, show the panels, and choose **Connect Spotify**. Approve the requested playback and metadata permissions. If you connected before the playback feature was added, choose **Enable audio** once to grant the new permissions.
+4. Wait for the playback panel to say Opoku is ready in Spotify Connect. Choose Opoku in Spotify's device picker on your phone, or click **Play here** to transfer the current playback to this browser. Keep this page open while listening. Touch browsers may require the **Play here** click to enable audio; smart-TV browsers must support Spotify's protected-media playback.
+
+Spotify's Development Mode has account and user-count restrictions; check the [latest Spotify developer requirements](https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security) and [redirect URI rules](https://developer.spotify.com/documentation/web-api/concepts/redirect_uri) if authorization is rejected. The [Web Playback SDK](https://developer.spotify.com/documentation/web-playback-sdk), [PKCE flow](https://developer.spotify.com/documentation/web-api/tutorials/code-pkce-flow), [currently-playing endpoint](https://developer.spotify.com/documentation/web-api/reference/get-the-users-currently-playing-track), and [transfer playback endpoint](https://developer.spotify.com/documentation/web-api/reference/transfer-a-users-playback) are documented by Spotify. A compatible Spotify Premium account is required, and the Web Playback SDK must not be used in commercial projects without Spotify's written approval. Browser playback also depends on the device's support for Spotify's protected media playback; TV browser support can vary.
+
 ## Technology
 
 | Part | Technology | Role |
 |---|---|---|
 | User interface | HTML5, CSS, plain JavaScript | Panels, responsive layout, search suggestions, controls, simulation, and route cleanup. |
 | Interactive map | MapLibre GL JS 5.6.2 | WebGL map rendering, vector styles, geographic camera, and GeoJSON route layers. Loaded from unpkg CDN. |
+| Music playback | Spotify Web Playback SDK and Web API with Authorization Code + PKCE | Shows current track metadata and registers the browser as a Spotify Connect player; requires Spotify Premium and no client secret. |
 | Basemap and tiles | OpenFreeMap Liberty style; OpenMapTiles schema; OpenStreetMap data | Global vector basemap and the road, building, park, water, and place features styled by Opoku. |
 | Place/address search | Photon public API by Komoot | Worldwide forward geocoding and suggestion results, based on OpenStreetMap data. |
 | Driving routes | OSRM car profile hosted by FOSSGIS at routing.openstreetmap.de | Road-following route geometry and estimated distance and time. Route durations are router estimates, not live traffic. |
 | Fonts | DM Sans and Libre Baskerville from Google Fonts | Interface and editorial display type. System fallbacks are specified. |
 
-Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, `dist/moods.js`, `dist/city-loader.js`, and the city-specific `dist/city-config*.js` files (plus this README and the small `package.json` metadata file).
+Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, `dist/moods.js`, `dist/spotify.js`, `dist/city-loader.js`, and the city-specific `dist/city-config*.js` files (plus this README and the small `package.json` metadata file).
 
 For lower-power devices such as TV browsers, the map's WebGL pixel ratio is capped at 1.5, the paper-grain overlay starts disabled, journey animation is capped at 30 FPS, and its update loop stops when no trip is moving or the page is hidden.
 
@@ -110,6 +127,7 @@ opoku/
     ├── style.css
     ├── app.js
     ├── moods.js
+    ├── spotify.js
     ├── city-loader.js
     ├── city-config-athens.js
     ├── city-config-thessaloniki.js

@@ -78,6 +78,22 @@
             aria-label="Zoom out">−</button><button id="north" title="Reset north"
             aria-label="Reset north">↑<small>N</small></button></div>
     <div class="playback panel">
+        <section class="spotify-widget" aria-label="Spotify now playing">
+            <div class="spotify-info">
+                <img id="spotifyArtwork" class="spotify-artwork" alt="" hidden>
+                <div class="spotify-copy">
+                    <span id="spotifyState" class="spotify-state" aria-live="polite">SPOTIFY · NOT CONNECTED</span>
+                    <strong id="spotifyTitle">Connect Spotify</strong>
+                    <small id="spotifyDetails">See what's playing on your phone.</small>
+                </div>
+            </div>
+            <div class="spotify-actions">
+                <a id="spotifyOpen" class="spotify-open" href="#" target="_blank" rel="noreferrer" hidden>Open in Spotify ↗</a>
+                <button id="spotifyConnect" type="button" class="spotify-connect">Connect Spotify</button>
+                <button id="spotifyPlayHere" type="button" class="spotify-play-here" hidden>Play here</button>
+                <button id="spotifyDisconnect" type="button" hidden>Disconnect</button>
+            </div>
+        </section>
         <div class="transport"><button id="play" class="play" disabled aria-label="Play journey">▶</button><button
                 id="restart" disabled aria-label="Restart journey">↺</button>
             <div><strong id="tripTitle">Your next little adventure</strong><small id="progressLabel">Draw a route to
@@ -100,6 +116,7 @@
     <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
     <script src="city-config-athens.js"></script>
     <script src="moods.js"></script>
+    <script src="spotify.js"></script>
     <script src="city-loader.js"></script>
 </body>
 
