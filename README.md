@@ -57,8 +57,9 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 ## Controls
 
 - Search for a start and destination, then choose one of the suggestions; or use the map-pick buttons.
+- The panels and map controls are hidden at startup. Use the header toggle to show them.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
-- In Follow mode, the camera tilts and turns smoothly with the route. Overview returns to a top-down view.
+- The camera follows the first automatic journey by default. In Follow mode, it tilts and turns smoothly with the route; Overview returns to a top-down view.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
 - The Drawing Layers panel has independent visibility switches. Roads, route lines, and endpoint markers start hidden; turn them on when useful.
 - **Hide panels** clears the interface panels from the map. The toggle remains available at the upper right.
@@ -76,6 +77,8 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 | Fonts | DM Sans and Libre Baskerville from Google Fonts | Interface and editorial display type. System fallbacks are specified. |
 
 Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, and `dist/city-config.js` (plus this README and the small `package.json` metadata file).
+
+For lower-power devices such as TV browsers, the map's WebGL pixel ratio is capped at 1.5, the paper-grain overlay starts disabled, journey animation is capped at 30 FPS, and its update loop stops when no trip is moving or the page is hidden.
 
 ## Third-party services, data, and limits
 
