@@ -4,7 +4,14 @@
         { id: 'thessaloniki', name: 'Thessaloniki', timeZone: 'Europe/Athens', config: 'city-config-thessaloniki.js' },
         { id: 'berlin', name: 'Berlin', timeZone: 'Europe/Berlin', config: 'city-config-berlin.js' },
         { id: 'london', name: 'London', timeZone: 'Europe/London', config: 'city-config-london.js' },
-        { id: 'barcelona', name: 'Barcelona', timeZone: 'Europe/Madrid', config: 'city-config-barcelona.js' }
+        { id: 'barcelona', name: 'Barcelona', timeZone: 'Europe/Madrid', config: 'city-config-barcelona.js' },
+        { id: 'paris', name: 'Paris', timeZone: 'Europe/Paris', config: 'city-config-paris.js' },
+        { id: 'new-york', name: 'New York', timeZone: 'America/New_York', config: 'city-config-new-york.js' },
+        { id: 'rio-de-janeiro', name: 'Rio de Janeiro', timeZone: 'America/Sao_Paulo', config: 'city-config-rio-de-janeiro.js' },
+        { id: 'tokyo', name: 'Tokyo', timeZone: 'Asia/Tokyo', config: 'city-config-tokyo.js' },
+        { id: 'hong-kong', name: 'Hong Kong', timeZone: 'Asia/Hong_Kong', config: 'city-config-hong-kong.js' },
+        { id: 'singapore', name: 'Singapore', timeZone: 'Asia/Singapore', config: 'city-config-singapore.js' },
+        { id: 'san-francisco', name: 'San Francisco', timeZone: 'America/Los_Angeles', config: 'city-config-san-francisco.js' }
     ];
     const defaultCity = cities[0];
     const requestedId = new URLSearchParams(location.search).get('city')?.toLowerCase();
