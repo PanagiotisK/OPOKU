@@ -22,9 +22,13 @@ py -m http.server 8000 --directory dist
 
 Then open <http://localhost:8000>. An internet connection is required. There is no npm install or build step.
 
-## Move the automatic demo to another city
+## Choose and configure a city
 
-Edit **`dist/city-config.js`**. The city name, starting map position, zoom, route interval, minimum trip length, and route anchors all live in one configuration object:
+Use the **City** selector in the planner to switch cities. The browser title and brand update to **Opoku x [City]**. The selected city is stored in the URL (for example, `?city=berlin`), so city links can be shared. Athens is the default when no city is specified and the fallback if another city's configuration cannot be loaded.
+
+Each city has its own configuration file using the `city-config-[city].js` naming pattern. **`dist/city-config-athens.js`** is Athens and the default/fallback; the other files are `dist/city-config-thessaloniki.js`, `dist/city-config-berlin.js`, `dist/city-config-london.js`, and `dist/city-config-barcelona.js`. **`dist/city-loader.js`** maps the selector and URL slugs to those files.
+
+Edit a city's configuration to change its name, starting map position, zoom, route interval, minimum trip length, and route anchors:
 
 ```js
 window.OPOKU_CONFIG = {
@@ -58,6 +62,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 
 - Search for a start and destination, then choose one of the suggestions; or use the map-pick buttons.
 - The panels and map controls are hidden at startup. Use the header toggle to show them.
+- Choose Athens, Thessaloniki, Berlin, London, or Barcelona from the City selector.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
 - The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
@@ -76,7 +81,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 | Driving routes | OSRM car profile hosted by FOSSGIS at routing.openstreetmap.de | Road-following route geometry and estimated distance and time. Route durations are router estimates, not live traffic. |
 | Fonts | DM Sans and Libre Baskerville from Google Fonts | Interface and editorial display type. System fallbacks are specified. |
 
-Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, and `dist/city-config.js` (plus this README and the small `package.json` metadata file).
+Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, `dist/city-loader.js`, and the city-specific `dist/city-config*.js` files (plus this README and the small `package.json` metadata file).
 
 For lower-power devices such as TV browsers, the map's WebGL pixel ratio is capped at 1.5, the paper-grain overlay starts disabled, journey animation is capped at 30 FPS, and its update loop stops when no trip is moving or the page is hidden.
 
@@ -103,7 +108,12 @@ opoku/
     ├── index.html
     ├── style.css
     ├── app.js
-    └── city-config.js
+    ├── city-loader.js
+    ├── city-config-athens.js
+    ├── city-config-thessaloniki.js
+    ├── city-config-berlin.js
+    ├── city-config-london.js
+    └── city-config-barcelona.js
 ```
 
 `package.json` is metadata only; the application runs directly from the static files.

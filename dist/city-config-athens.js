@@ -1,4 +1,5 @@
-/* Change this file to move Opoku's automatic demo journeys to another city.
+/* Default and fallback Athens configuration. All city configurations use the
+   city-config-[city].js filename pattern.
    Coordinates use [longitude, latitude]. Choose points near public roads so
    the global driving router can snap them to a connected road network. */
 window.OPOKU_CONFIG={

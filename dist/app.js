@@ -1,5 +1,15 @@
 const $ = id => document.getElementById(id);
 const DEMO_CITY=window.OPOKU_CONFIG.city;
+document.title=`Opoku x ${DEMO_CITY.name}`;
+$('appTitle').textContent=document.title;
+const citySelect=$('citySelect');
+for(const city of window.OPOKU_CITIES){const option=document.createElement('option');option.value=city.id;option.textContent=city.name;citySelect.append(option)}
+citySelect.value=window.OPOKU_CITY_SLUG;
+const brandUrl=new URL(location.href);
+brandUrl.searchParams.delete('city');
+if(window.OPOKU_CITY_SLUG!=='athens')brandUrl.searchParams.set('city',window.OPOKU_CITY_SLUG);
+$('brandLink').href=brandUrl.pathname+brandUrl.search+brandUrl.hash;
+citySelect.onchange=()=>{const nextUrl=new URL(location.href);if(citySelect.value==='athens')nextUrl.searchParams.delete('city');else nextUrl.searchParams.set('city',citySelect.value);location.assign(nextUrl)};
 const endpoints = {route:'https://routing.openstreetmap.de/routed-car/route/v1/driving/',search:'https://photon.komoot.io/api/'};
 const state = {points:{},speed:6,follow:true,pick:null,ready:false,selected:null,auto:true};
 const flags = {roads:false,buildings:true,parks:true,water:true,labels:true,streets:false,pois:false,landmarks:true,texture:false,sketch:true,route:false,markers:false};
