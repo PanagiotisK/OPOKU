@@ -59,7 +59,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 - Search for a start and destination, then choose one of the suggestions; or use the map-pick buttons.
 - The panels and map controls are hidden at startup. Use the header toggle to show them.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
-- The camera follows the first automatic journey by default. In Follow mode, it tilts and turns smoothly with the route; Overview returns to a top-down view.
+- The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
 - The Drawing Layers panel has independent visibility switches. Roads, route lines, and endpoint markers start hidden; turn them on when useful.
 - **Hide panels** clears the interface panels from the map. The toggle remains available at the upper right.

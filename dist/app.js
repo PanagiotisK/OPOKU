@@ -7,6 +7,7 @@ const names = {roads:['Roads','ink'],buildings:['Building outlines','quiet'],par
 let map, markers={}, landmarks=[], routeToken=0, lastRoute=0, routeQueue=Promise.resolve(), manualPending=false, autoPending=false, autoEpoch=0, autoDue=0, autoNotice='', nextId=0, lastTime=0, animationFrame=0;
 const trips = new Map();
 const MAX_TRIPS=5, AUTO_INTERVAL=DEMO_CITY.routeIntervalMs;
+const CAMERA_LOOKAHEAD_SECONDS=2, CAMERA_LOOKAHEAD_MIN_METERS=40, CAMERA_LOOKAHEAD_MAX_METERS=180, CAMERA_HEADING_DEADBAND=1;
 let cameraAngularVelocity=0;
 const selectedTrip=()=>trips.get(state.selected);
 const personalTrip=()=>[...trips.values()].find(t=>!t.auto);
@@ -75,7 +76,8 @@ function smoothHeading(current,target,velocity,dt){
 function travelHeading(t){
   const r=t.route,progress=t.elapsed/r.duration;
   // Read a short stretch of road, rather than each sharp polyline vertex.
-  const span=Math.min(65,Math.max(15,r.total/r.duration*1.5));
+  const speed=r.total/r.duration*state.speed;
+  const span=Math.min(CAMERA_LOOKAHEAD_MAX_METERS,Math.max(CAMERA_LOOKAHEAD_MIN_METERS,speed*CAMERA_LOOKAHEAD_SECONDS));
   const behind=routePosition(r,Math.max(0,progress-span*.3/r.total)).coords;
   const ahead=routePosition(r,Math.min(1,progress+span/r.total)).coords;
   return distance(behind,ahead)>1?bearing(behind,ahead):t.bearing;
@@ -86,7 +88,9 @@ function renderVehicle(t,dt=0){
   t.marker.setLngLat(p.coords).setRotation(t.bearing);
   if(state.follow&&state.selected===t.id){
     if(!dt){cameraAngularVelocity=0;map.easeTo({center:p.coords,pitch:t.running?45:0,duration:700});return}
-    const heading=smoothHeading(map.getBearing(),travelHeading(t),cameraAngularVelocity,dt);
+    const currentHeading=map.getBearing(),targetHeading=travelHeading(t);
+    const headingDelta=((targetHeading-currentHeading)%360+540)%360-180;
+    const heading=smoothHeading(currentHeading,Math.abs(headingDelta)<CAMERA_HEADING_DEADBAND?currentHeading:targetHeading,cameraAngularVelocity,dt);
     cameraAngularVelocity=heading.velocity;
     map.jumpTo({center:p.coords,bearing:heading.angle,pitch:map.getPitch()+((t.running?45:0)-map.getPitch())*(1-Math.exp(-dt*3))});
   }
