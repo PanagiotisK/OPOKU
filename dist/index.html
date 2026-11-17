@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Opoku</title>
+    <meta name="description"
+        content="Real roads. A little imagination. Explore the world with hand-drawn maps and animated journeys.">
+    <link href="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="grain"></div>
+    <header><a class="brand" href="./"><span class="brand-icon">↝</span> Opoku</a>
+        <div class="header-actions"><button id="layersButton" aria-expanded="true">☷ <span>Drawing
+                    layers</span></button><button id="uiToggle" aria-pressed="false" aria-label="Hide panels"
+                title="Hide panels"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="5"
+                        fill="#f3e7c7" stroke="#b18b45" stroke-width="1.5" /></svg></button>
+        </div>
+    </header>
+    <main class="planner panel">
+        <!-- <div class="eyebrow">THE WORLD, IN A DIFFERENT LIGHT</div> -->
+        <h1>Take the scenic line.</h1>
+        <!-- <p class="intro">Real roads. A little imagination.<br>Where shall we wander?</p> -->
+        <div class="search-settings"><span>FIND YOUR PLACES</span><label class="sr-only" for="searchScope">Search
+                area</label><select id="searchScope">
+                <option value="nearby">Near this map</option>
+                <option value="worldwide">Worldwide</option>
+            </select></div>
+        <form id="journey">
+            <div class="location"><span class="point">A</span><label>STARTING POINT<input id="start" autocomplete="off"
+                        placeholder="City, address, or place" value="" role="combobox" aria-autocomplete="list"
+                        aria-controls="startResults" aria-expanded="false"></label><button type="button" class="pick"
+                    data-pick="start" title="Choose start on map" aria-label="Choose start on map">⌖</button>
+                <div id="startResults" class="results" role="listbox"></div>
+            </div>
+            <div class="connector"></div>
+            <div class="location"><span class="point end">B</span><label>DESTINATION<input id="end" autocomplete="off"
+                        placeholder="Where to?" value="" role="combobox" aria-autocomplete="list"
+                        aria-controls="endResults" aria-expanded="false"></label><button type="button" class="pick"
+                    data-pick="end" title="Choose destination on map" aria-label="Choose destination on map">⌖</button>
+                <div id="endResults" class="results" role="listbox"></div>
+            </div><button class="primary" id="draw" type="submit">Draw my journey <span>↗</span></button>
+        </form>
+        <div id="status" role="status">Loading your living map…</div>
+        <div id="stats" hidden>
+            <div><strong id="distance">—</strong><small>DISTANCE</small></div>
+            <div><strong id="duration">—</strong><small>EST. DRIVE · NO LIVE TRAFFIC</small></div>
+        </div>
+        <section class="living">
+            <div class="living-heading"><label><input id="ambientToggle" type="checkbox" checked><span
+                        class="live-dot"></span> <span id="cityLabel">Athens, alive</span></label><span
+                    id="routeCount">0 / 5</span></div>
+            <div class="living-sub"><span id="ambientStatus" role="status">New Athens journeys every 12
+                    seconds.</span><button id="showAthens" type="button" title="Show demo city"><span
+                        id="cityButtonLabel">↗ Athens</span></button></div>
+            <div id="activeTrips" aria-label="Active journeys"></div>
+            <p class="living-hint">Select a journey to control or follow it.</p>
+        </section>
+    </main>
+    <aside id="layers" class="panel">
+        <div class="aside-title"><span>Make it your map</span><span class="pencil">✎</span></div>
+        <p>A little more detail. Or a little less.</p>
+        <div id="toggles"></div>
+        <div class="swatches"><span style="background:#263b50"></span><span style="background:#d6a447"></span><span
+                style="background:#dae4dd"></span><span style="background:#dce8ea"></span><i>Ink, ochre & open
+                space.</i></div>
+    </aside>
+    <div class="map-tools"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut"
+            aria-label="Zoom out">−</button><button id="north" title="Reset north"
+            aria-label="Reset north">↑<small>N</small></button></div>
+    <div class="playback panel">
+        <div class="transport"><button id="play" class="play" disabled aria-label="Play journey">▶</button><button
+                id="restart" disabled aria-label="Restart journey">↺</button>
+            <div><strong id="tripTitle">Your next little adventure</strong><small id="progressLabel">Draw a route to
+                    begin</small></div>
+        </div>
+        <div class="speed"><label for="speed">ALL JOURNEYS <output id="speedLabel">6×</output></label><input id="speed"
+                type="range" min="1" max="300" value="6">
+            <div><span>Take it slow</span><span>Fly through</span></div>
+        </div>
+        <div class="camera"><button id="overview" class="selected">↗ Overview</button><button id="follow">⌖ Follow
+                aura</button><span class="zoom-level">Zoom <output id="zoomLevel">—</output></span></div>
+    </div>
+    <div class="map-caption">A small escape, wherever you are.</div>
+    <footer>Maps: <a href="https://openfreemap.org" target="_blank" rel="noreferrer">OpenFreeMap</a> · © OpenMapTiles ·
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap</a> ·
+        Routing: <a href="https://routing.openstreetmap.de/about.html" target="_blank" rel="noreferrer">OSRM /
+            FOSSGIS</a> · Search: Photon · <a href="https://www.openstreetmap.org/fixthemap" target="_blank"
+            rel="noreferrer">Fix the map</a>
+    </footer>
+    <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
+    <script src="city-config.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

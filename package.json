@@ -1,0 +1,9 @@
+{
+  "name": "opoku",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A hand-drawn-inspired global route animation experience",
+  "scripts": {
+    "start": "python -m http.server 8000 --directory dist"
+  }
+}
