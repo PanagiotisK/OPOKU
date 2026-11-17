@@ -67,7 +67,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 - The Mood selector follows the selected city's local sunrise and sunset by default: Blue hour runs within one hour before and after each, Golden hour covers the remaining daylight, and After dark covers the rest of the night. Turn off **Use city local time** to choose a mood manually; the mood URL parameter makes that look shareable.
 - Connect Spotify in the playback panel to show the track or episode playing on the same Spotify account. With the extra playback permission, Opoku can register as a Spotify Connect device; choose Opoku from Spotify on your phone or click **Play here** to transfer playback into this browser.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
-- The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view.
+- The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view. Use **3D** in Playback to turn building volumes on or off. Turning it on tilts and zooms the map to show the building heights available in the vector tiles. Follow mode can tilt the camera independently of 3D buildings.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
 - The Map style panel has independent visibility switches. Roads, route lines, and endpoint markers start hidden; turn them on when useful.
 - **Hide panels** clears the interface panels from the map. The toggle remains available at the upper right.
