@@ -1,6 +1,7 @@
 window.OPOKU_CONFIG={
   city:{
     name:'Barcelona',
+    timeZone:'Europe/Madrid',
     center:[2.1734,41.3851],
     zoom:15.7,
     routeIntervalMs:12000,

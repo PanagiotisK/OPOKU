@@ -5,6 +5,7 @@
 window.OPOKU_CONFIG={
   city:{
     name:'Athens',
+    timeZone:'Europe/Athens',
     center:[23.7275,37.9838],
     zoom:15.7,
     routeIntervalMs:12000,

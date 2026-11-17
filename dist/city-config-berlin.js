@@ -1,6 +1,7 @@
 window.OPOKU_CONFIG={
   city:{
     name:'Berlin',
+    timeZone:'Europe/Berlin',
     center:[13.405,52.52],
     zoom:15.7,
     routeIntervalMs:12000,

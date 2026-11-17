@@ -1,6 +1,7 @@
 window.OPOKU_CONFIG={
   city:{
     name:'London',
+    timeZone:'Europe/London',
     center:[-0.1276,51.5072],
     zoom:15.7,
     routeIntervalMs:12000,

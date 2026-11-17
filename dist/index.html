@@ -27,6 +27,9 @@
         <!-- <p class="intro">Real roads. A little imagination.<br>Where shall we wander?</p> -->
         <div class="city-switch"><label for="citySelect">CITY</label><select id="citySelect"
                 aria-label="Choose a city"></select></div>
+        <div class="mood-switch"><label for="moodSelect">MOOD</label><select id="moodSelect"
+                aria-label="Choose a visual mood"></select></div>
+        <label class="mood-auto"><input id="moodAuto" type="checkbox"> Use city local time</label>
         <div class="search-settings"><span>FIND YOUR PLACES</span><label class="sr-only" for="searchScope">Search
                 area</label><select id="searchScope">
                 <option value="nearby">Near this map</option>
@@ -96,6 +99,7 @@
     </footer>
     <script src="https://unpkg.com/maplibre-gl@5.6.2/dist/maplibre-gl.js"></script>
     <script src="city-config-athens.js"></script>
+    <script src="moods.js"></script>
     <script src="city-loader.js"></script>
 </body>
 

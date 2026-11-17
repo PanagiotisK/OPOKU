@@ -1,6 +1,7 @@
 window.OPOKU_CONFIG={
   city:{
     name:'Thessaloniki',
+    timeZone:'Europe/Athens',
     center:[22.9444,40.6401],
     zoom:15.7,
     routeIntervalMs:12000,

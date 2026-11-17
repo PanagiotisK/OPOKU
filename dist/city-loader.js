@@ -1,10 +1,10 @@
 (() => {
     const cities = [
-        { id: 'athens', name: 'Athens', config: 'city-config-athens.js' },
-        { id: 'thessaloniki', name: 'Thessaloniki', config: 'city-config-thessaloniki.js' },
-        { id: 'berlin', name: 'Berlin', config: 'city-config-berlin.js' },
-        { id: 'london', name: 'London', config: 'city-config-london.js' },
-        { id: 'barcelona', name: 'Barcelona', config: 'city-config-barcelona.js' }
+        { id: 'athens', name: 'Athens', timeZone: 'Europe/Athens', config: 'city-config-athens.js' },
+        { id: 'thessaloniki', name: 'Thessaloniki', timeZone: 'Europe/Athens', config: 'city-config-thessaloniki.js' },
+        { id: 'berlin', name: 'Berlin', timeZone: 'Europe/Berlin', config: 'city-config-berlin.js' },
+        { id: 'london', name: 'London', timeZone: 'Europe/London', config: 'city-config-london.js' },
+        { id: 'barcelona', name: 'Barcelona', timeZone: 'Europe/Madrid', config: 'city-config-barcelona.js' }
     ];
     const defaultCity = cities[0];
     const requestedId = new URLSearchParams(location.search).get('city')?.toLowerCase();
@@ -33,6 +33,14 @@
         if (!configCity) {
             showError('Unable to load the city configuration. Please reload the page.');
             return;
+        }
+        if (!configCity.timeZone) {
+            if (!city.timeZone) {
+                showError(`Missing time zone for ${configCity.name}. Please update its city configuration.`);
+                return;
+            }
+            console.warn(`City configuration for ${configCity.name} has no time zone; using ${city.timeZone}.`);
+            configCity.timeZone = city.timeZone;
         }
 
         window.OPOKU_CITY_SLUG = city.id;

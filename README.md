@@ -26,7 +26,7 @@ Then open <http://localhost:8000>. An internet connection is required. There is 
 
 Use the **City** selector in the planner to switch cities. The browser title and brand update to **Opoku x [City]**. The selected city is stored in the URL (for example, `?city=berlin`), so city links can be shared. Athens is the default when no city is specified and the fallback if another city's configuration cannot be loaded.
 
-Each city has its own configuration file using the `city-config-[city].js` naming pattern. **`dist/city-config-athens.js`** is Athens and the default/fallback; the other files are `dist/city-config-thessaloniki.js`, `dist/city-config-berlin.js`, `dist/city-config-london.js`, and `dist/city-config-barcelona.js`. **`dist/city-loader.js`** maps the selector and URL slugs to those files.
+Each city has its own configuration file using the `city-config-[city].js` naming pattern. **`dist/city-config-athens.js`** is Athens and the default/fallback; the other files are `dist/city-config-thessaloniki.js`, `dist/city-config-berlin.js`, `dist/city-config-london.js`, and `dist/city-config-barcelona.js`. **`dist/city-loader.js`** maps the selector and URL slugs to those files. Each config includes an IANA `timeZone` so automatic mood selection follows the selected city's clock and daylight-saving rules. The loader also supplies the known city time zone and warns in the console if an older config is missing it.
 
 Edit a city's configuration to change its name, starting map position, zoom, route interval, minimum trip length, and route anchors:
 
@@ -34,6 +34,7 @@ Edit a city's configuration to change its name, starting map position, zoom, rou
 window.OPOKU_CONFIG = {
   city: {
     name: 'Athens',
+    timeZone: 'Europe/Athens',
     center: [23.7275, 37.9838], // [longitude, latitude]
     zoom: 15.7,
     routeIntervalMs: 12000,
@@ -63,6 +64,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 - Search for a start and destination, then choose one of the suggestions; or use the map-pick buttons.
 - The panels and map controls are hidden at startup. Use the header toggle to show them.
 - Choose Athens, Thessaloniki, Berlin, London, or Barcelona from the City selector.
+- The Mood selector follows the selected city's local sunrise and sunset by default: Blue hour runs within one hour before and after each, Golden hour covers the remaining daylight, and After dark covers the rest of the night. Turn off **Use city local time** to choose a mood manually; the mood URL parameter makes that look shareable.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
 - The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
@@ -81,7 +83,7 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 | Driving routes | OSRM car profile hosted by FOSSGIS at routing.openstreetmap.de | Road-following route geometry and estimated distance and time. Route durations are router estimates, not live traffic. |
 | Fonts | DM Sans and Libre Baskerville from Google Fonts | Interface and editorial display type. System fallbacks are specified. |
 
-Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, `dist/city-loader.js`, and the city-specific `dist/city-config*.js` files (plus this README and the small `package.json` metadata file).
+Opoku is buildless: it has no framework, package manager, database, server application, or map-provider API key. The application files are `dist/index.html`, `dist/style.css`, `dist/app.js`, `dist/moods.js`, `dist/city-loader.js`, and the city-specific `dist/city-config*.js` files (plus this README and the small `package.json` metadata file).
 
 For lower-power devices such as TV browsers, the map's WebGL pixel ratio is capped at 1.5, the paper-grain overlay starts disabled, journey animation is capped at 30 FPS, and its update loop stops when no trip is moving or the page is hidden.
 
@@ -101,13 +103,13 @@ The map shows OSM attribution and credits the tile/style and route providers in 
 
 ```text
 opoku/
-├── README.md
 ├── package.json
 ├── README.md
 └── dist/
     ├── index.html
     ├── style.css
     ├── app.js
+    ├── moods.js
     ├── city-loader.js
     ├── city-config-athens.js
     ├── city-config-thessaloniki.js
