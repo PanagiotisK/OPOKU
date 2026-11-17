@@ -62,14 +62,14 @@ Automatic route endpoints are chosen from pairs in `places`, then the router sna
 ## Controls
 
 - Search for a start and destination, then choose one of the suggestions; or use the map-pick buttons.
-- The panels and map controls are hidden at startup. Use the header toggle to show them.
+- The panels and map controls are hidden at startup. Use the header toggle to show them. On laptops, controls are grouped into Journey, Map style, and Playback panels; on phones and short screens, use the three tabs to switch between compact panels without scrolling the page.
 - Choose Athens, Thessaloniki, Berlin, London, or Barcelona from the City selector.
 - The Mood selector follows the selected city's local sunrise and sunset by default: Blue hour runs within one hour before and after each, Golden hour covers the remaining daylight, and After dark covers the rest of the night. Turn off **Use city local time** to choose a mood manually; the mood URL parameter makes that look shareable.
 - Connect Spotify in the playback panel to show the track or episode playing on the same Spotify account. With the extra playback permission, Opoku can register as a Spotify Connect device; choose Opoku from Spotify on your phone or click **Play here** to transfer playback into this browser.
 - Select an active journey chip to control a route. Play, pause, restart, adjust the shared simulation speed, or follow its marker.
 - The camera follows the first automatic journey by default. In Follow mode, it tilts and anticipates turns based on playback speed; Overview returns to a top-down view.
 - **Athens, alive** enables or disables automatic sample journeys. There are at most five active journeys at once.
-- The Drawing Layers panel has independent visibility switches. Roads, route lines, and endpoint markers start hidden; turn them on when useful.
+- The Map style panel has independent visibility switches. Roads, route lines, and endpoint markers start hidden; turn them on when useful.
 - **Hide panels** clears the interface panels from the map. The toggle remains available at the upper right.
 - When a journey ends, its line, aura, and endpoint markers are removed. If the camera was following it, the camera smoothly follows the newest active journey.
 

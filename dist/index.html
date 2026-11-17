@@ -11,17 +11,25 @@
     <link href="style.css" rel="stylesheet">
 </head>
 
-<body class="ui-hidden">
+<body class="ui-hidden" data-active-panel="planner">
     <div id="map"></div>
     <div id="grain"></div>
     <header><a class="brand" id="brandLink" href="./"><span class="brand-icon">↝</span><span id="appTitle">Opoku x Athens</span></a>
-        <div class="header-actions"><button id="layersButton" aria-expanded="true">☷ <span>Drawing
-                    layers</span></button><button id="uiToggle" aria-pressed="true" aria-label="Show panels"
+        <div class="header-actions"><button id="layersButton" aria-expanded="true" aria-controls="layers">☷ <span>Map
+                    style</span></button><button id="uiToggle" aria-pressed="true" aria-label="Show panels"
                 title="Show panels"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10h12" fill="none"
                         stroke="#b18b45" stroke-linecap="round" stroke-width="1.5" /></svg></button>
         </div>
     </header>
-    <main class="planner panel">
+    <nav class="control-tabs" aria-label="Control panels">
+        <button class="control-tab" type="button" data-panel="planner" aria-controls="planner"
+            aria-pressed="true">Journey</button>
+        <button class="control-tab" type="button" data-panel="layers" aria-controls="layers"
+            aria-pressed="false">Map style</button>
+        <button class="control-tab" type="button" data-panel="playback" aria-controls="playback"
+            aria-pressed="false">Playback</button>
+    </nav>
+    <main id="planner" class="planner panel">
         <!-- <div class="eyebrow">THE WORLD, IN A DIFFERENT LIGHT</div> -->
         <h1>Take the scenic line.</h1>
         <!-- <p class="intro">Real roads. A little imagination.<br>Where shall we wander?</p> -->
@@ -66,18 +74,15 @@
             <p class="living-hint">Select a journey to control or follow it.</p>
         </section>
     </main>
-    <aside id="layers" class="panel">
-        <div class="aside-title"><span>Make it your map</span><span class="pencil">✎</span></div>
-        <p>A little more detail. Or a little less.</p>
+    <aside id="layers" class="panel" aria-label="Map style">
+        <div class="aside-title"><span>Map style</span><span class="pencil">✎</span></div>
+        <p>Choose what appears on the map.</p>
         <div id="toggles"></div>
         <div class="swatches"><span style="background:#263b50"></span><span style="background:#d6a447"></span><span
                 style="background:#dae4dd"></span><span style="background:#dce8ea"></span><i>Ink, ochre & open
                 space.</i></div>
     </aside>
-    <div class="map-tools"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut"
-            aria-label="Zoom out">−</button><button id="north" title="Reset north"
-            aria-label="Reset north">↑<small>N</small></button></div>
-    <div class="playback panel">
+    <div id="playback" class="playback panel" aria-label="Playback and audio">
         <section class="spotify-widget" aria-label="Spotify now playing">
             <div class="spotify-info">
                 <img id="spotifyArtwork" class="spotify-artwork" alt="" hidden>
@@ -99,12 +104,18 @@
             <div><strong id="tripTitle">Your next little adventure</strong><small id="progressLabel">Draw a route to
                     begin</small></div>
         </div>
-        <div class="speed"><label for="speed">ALL JOURNEYS <output id="speedLabel">6×</output></label><input id="speed"
-                type="range" min="1" max="300" value="6">
+        <div class="speed"><label for="speed"><span>ALL JOURNEYS</span><span class="speed-values"><output id="speedLabel"
+                        aria-label="Journey speed">6×</output><span class="speed-divider" aria-hidden="true">/</span><span
+                        class="zoom-label">Zoom</span><output id="zoomLevel" aria-label="Zoom level">—</output></span></label><input id="speed"
+                type="range" min="1" max="300" value="6" aria-label="Journey speed">
             <div><span>Take it slow</span><span>Fly through</span></div>
         </div>
         <div class="camera"><button id="overview" class="selected">↗ Overview</button><button id="follow">⌖ Follow
-                aura</button><span class="zoom-level">Zoom <output id="zoomLevel">—</output></span></div>
+                aura</button>
+            <div class="map-tools"><button id="zoomIn" aria-label="Zoom in">+</button><button id="zoomOut"
+                    aria-label="Zoom out">−</button><button id="north" title="Reset north"
+                    aria-label="Reset north">↑<small>N</small></button></div>
+        </div>
     </div>
     <div class="map-caption">A small escape, wherever you are.</div>
     <footer>Maps: <a href="https://openfreemap.org" target="_blank" rel="noreferrer">OpenFreeMap</a> · © OpenMapTiles ·
